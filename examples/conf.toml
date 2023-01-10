@@ -1,0 +1,14 @@
+[db]
+url =  "https://zincsearch.box"
+user = "username"
+pass  = "super_secret_pass"
+
+[[indexers]]
+folder = "${HOME}/loads_of_json_files_about_nature"
+rxmatcher = ".*/animal_.*.json$"
+index = "animals"
+
+[[indexers]]
+folder = "${HOME}/loads_of_json_files_about_nature"
+rxmatcher = ".*/vegetable_.*.json$"
+index = "vegetables"
