@@ -2,7 +2,6 @@
 .task/
 
 build/
-conf/
 tmp/
 
 go.trace
