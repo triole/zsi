@@ -14,7 +14,7 @@ The Zinc Search Indexer crawls a folder for files and triggers indexing them via
 
 Settings are applied by config files which look like the one below.
 
-```go mdox-exec="cat example/conf.toml"
+```go mdox-exec="cat examples/conf.toml"
 [db]
 url =  "https://zincsearch.box"
 user = "username"
