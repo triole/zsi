@@ -6,6 +6,7 @@ import (
 	"path"
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"strconv"
 	"strings"
 
@@ -22,6 +23,7 @@ var (
 
 var CLI struct {
 	ConfigFile  string `help:"file to process, positional arg required" arg optional`
+	Threads     int    `help:"max indexer threads, default no of avail. cpu threads" short:t default:${proc}`
 	LogFile     string `help:"log file" short:l default:/dev/stdout`
 	LogLevel    string `help:"log level" short:e default:info enum:"debug,info,error"`
 	LogNoColors bool   `help:"disable output colours, print plain text" short:n`
@@ -45,6 +47,7 @@ func parseArgs() {
 		kong.Vars{
 			"curdir": curdir,
 			"config": path.Join(getBindir(), appName+".toml"),
+			"proc":   strconv.Itoa(runtime.NumCPU()),
 		},
 	)
 	_ = ctx.Run()

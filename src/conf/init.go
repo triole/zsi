@@ -4,10 +4,11 @@ import (
 	"zsi/src/logging"
 )
 
-func Init(configFile string, lg logging.Logging) (conf Conf) {
+func Init(configFile string, threads int, lg logging.Logging) (conf Conf) {
 	conf.Lg = lg
 	configFile = conf.detectConfFile(configFile)
 	conf.readTomlFile(configFile)
+	conf.Threads = threads
 	return
 }
 

@@ -5,6 +5,7 @@ import "zsi/src/logging"
 type Conf struct {
 	DB       DB        `toml:"db"`
 	Indexers []Indexer `toml:"indexers"`
+	Threads  int
 	API      API
 	Lg       logging.Logging
 }

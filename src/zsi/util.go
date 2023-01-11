@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"sort"
 	"zsi/src/logging"
 )
 
@@ -50,6 +51,8 @@ func (z Zsi) find(basedir string, rxFilter string) []string {
 		"folder": basedir,
 		"error":  err,
 	})
+
+	sort.Strings(filelist)
 	return filelist
 }
 
