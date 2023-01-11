@@ -51,13 +51,15 @@ Executing a command like `zsi animals` will make zsi look for a config file call
 
 ```go mdox-exec="r -h"
 
-a golang code example from spring
+a zinc search indexer
 
 Arguments:
   [<config-file>]    file to process, positional arg required
 
 Flags:
   -h, --help                      Show context-sensitive help.
+  -t, --threads=16                max indexer threads, default no of avail.
+                                  cpu threads
   -l, --log-file="/dev/stdout"    log file
   -e, --log-level="info"          log level
   -n, --log-no-colors             disable output colours, print plain text
