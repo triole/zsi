@@ -1,6 +1,7 @@
 package conf
 
 import (
+	"fmt"
 	"os"
 	"path"
 	"path/filepath"
@@ -14,14 +15,21 @@ func (conf *Conf) detectConfFile(filePath string) (s string) {
 	if !strings.HasSuffix(".toml", filePath) {
 		filePath += ".toml"
 	}
+	abs, err := filepath.Abs(filePath)
+	conf.Lg.IfErrFatal("Absolute file path creation failed", logging.F{
+		"error": err,
+		"file":  filePath,
+	})
 	userHomeDir, _ := os.UserHomeDir()
 	arr := []string{
-		conf.abs(filePath),
-		conf.abs(path.Join(conf.executablePath()+"path", filePath)),
-		conf.abs(path.Join(userHomeDir, ".config", "zsi", filePath)),
-		conf.abs(path.Join(userHomeDir, ".conf", "zsi", filePath)),
+		abs,
+		abs + ".toml",
+		path.Join(conf.executablePath()+"path", filePath),
+		path.Join(userHomeDir, ".config", "zsi", filePath),
+		path.Join(userHomeDir, ".conf", "zsi", filePath),
 	}
 	for _, fil := range arr {
+		fmt.Printf("%q\n", fil)
 		if conf.exists(fil) {
 			s = fil
 			break
@@ -31,15 +39,10 @@ func (conf *Conf) detectConfFile(filePath string) (s string) {
 }
 
 func (conf *Conf) readTomlFile(filename string) {
-	abs, err := filepath.Abs(filename)
-	conf.Lg.IfErrFatal("Absolute file path creation failed", logging.F{
-		"error": err,
-		"file":  filename,
-	})
 	conf.Lg.Info("Read config", logging.F{
-		"file": abs,
+		"file": filename,
 	})
-	content, err := os.ReadFile(abs)
+	content, err := os.ReadFile(filename)
 	conf.Lg.IfErrFatal("Can not read file", logging.F{
 		"error": err,
 		"file":  filename,
