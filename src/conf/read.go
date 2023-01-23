@@ -1,7 +1,6 @@
 package conf
 
 import (
-	"fmt"
 	"os"
 	"path"
 	"path/filepath"
@@ -29,7 +28,6 @@ func (conf *Conf) detectConfFile(filePath string) (s string) {
 		path.Join(userHomeDir, ".conf", "zsi", filePath),
 	}
 	for _, fil := range arr {
-		fmt.Printf("%q\n", fil)
 		if conf.exists(fil) {
 			s = fil
 			break
