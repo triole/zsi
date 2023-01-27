@@ -11,7 +11,7 @@ import (
 )
 
 func (conf *Conf) detectConfFile(filePath string) (s string) {
-	if !strings.HasSuffix(".toml", filePath) {
+	if !strings.HasSuffix(filePath, ".toml") {
 		filePath += ".toml"
 	}
 	abs, err := filepath.Abs(filePath)
