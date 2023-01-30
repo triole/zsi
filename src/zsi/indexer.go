@@ -17,19 +17,24 @@ func (z *Zsi) RunOperation(operation string) {
 	}
 
 	c := 0
-	bar := progressbar.Default(int64(len(z.Documents)))
-	for done := range z.ChDone {
-		if len(done.Errors) > 0 {
-			z.Lg.Error("Request failed", logging.F{"error": done.Errors})
+	ll := len(z.Documents)
+	if ll > 1 {
+		bar := progressbar.Default(int64(ll))
+		for done := range z.ChDone {
+			if len(done.Errors) > 0 {
+				z.Lg.Error("Request failed", logging.F{"error": done.Errors})
+			}
+			c++
+			bar.Add(1)
+			bar.Describe(z.makeBarDescription(done, len(z.ChQueue)))
+			if c >= len(z.Documents) {
+				close(z.ChQueue)
+				close(z.ChDone)
+				break
+			}
 		}
-		c++
-		bar.Add(1)
-		bar.Describe(z.makeBarDescription(done, len(z.ChQueue)))
-		if c >= len(z.Documents) {
-			close(z.ChQueue)
-			close(z.ChDone)
-			break
-		}
+	} else {
+		z.Lg.Info("No documents found", logging.F{})
 	}
 }
 
