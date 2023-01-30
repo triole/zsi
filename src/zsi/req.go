@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 )
 
@@ -16,8 +17,16 @@ func (z Zsi) fireReq(rp tRequestProcessor) {
 	client := &http.Client{
 		Timeout: 1 * time.Second,
 	}
+
+	var payload []byte
+	if strings.HasSuffix(".csv", rp.Document.Path) {
+		payload = rp.Document.Data
+	} else {
+		payload = z.readFile(rp.Document.Path)
+	}
+
 	request, err := http.NewRequest(
-		rp.Method, urlObj.String(), bytes.NewBuffer(z.readFile(rp.Path)),
+		rp.Method, urlObj.String(), bytes.NewBuffer(payload),
 	)
 
 	if err != nil {

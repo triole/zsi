@@ -19,8 +19,6 @@ func (z *Zsi) RunOperation(operation string) {
 	c := 0
 	bar := progressbar.Default(int64(len(z.Documents)))
 	for done := range z.ChDone {
-		// fmt.Printf("%q\n", len(z.ChDone))
-		// done := <-z.ChDone
 		if len(done.Errors) > 0 {
 			z.Lg.Error("Request failed", logging.F{"error": done.Errors})
 		}
@@ -37,17 +35,17 @@ func (z *Zsi) RunOperation(operation string) {
 
 func (z Zsi) pushRequestProcessor(endpoint conf.Endpoint, document conf.Document) {
 	rp := tRequestProcessor{
-		Method: strings.ToUpper(endpoint.Method),
-		URL:    z.Conf.API.URL + document.Index + "/_doc/" + document.ID,
-		Path:   document.Path,
-		Errors: []error{},
+		Method:   strings.ToUpper(endpoint.Method),
+		URL:      z.Conf.API.URL + document.Index + "/_doc/" + document.ID,
+		Document: document,
+		Errors:   []error{},
 	}
 	z.ChQueue <- rp
 	go z.fireReq(rp)
 }
 
 func (z Zsi) makeBarDescription(rp tRequestProcessor, queueLength int) string {
-	truncatedPath := z.truncateLeft(rp.Path, 80)
+	truncatedPath := z.truncateLeft(rp.Document.Path, 80)
 	return fmt.Sprintf(
 		"%80.80s   | t%d/%d ", truncatedPath, queueLength, z.Conf.Threads,
 	)

@@ -1,0 +1,9 @@
+[db]
+url =  "https://zincsearch.box"
+user = "username"
+pass  = "super_secret_pass"
+
+[[indexers]]
+folder = "nfl_scores_and_betting_data/db"
+rxmatcher = ".*/.*_scores.csv$"
+index = "nfl"

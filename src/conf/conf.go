@@ -39,5 +39,6 @@ type Documents []Document
 type Document struct {
 	ID    string
 	Path  string
+	Data  []byte
 	Index string
 }

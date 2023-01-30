@@ -18,7 +18,7 @@ type tChanProcessor chan tRequestProcessor
 type tRequestProcessor struct {
 	Method         string
 	URL            string
-	Path           string
+	Document       conf.Document
 	ResponseStatus int
 	Errors         []error
 }
