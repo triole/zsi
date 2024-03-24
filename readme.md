@@ -1,10 +1,12 @@
 # ZSI ![example workflow](https://github.com/triole/zsi/actions/workflows/build.yaml/badge.svg)
 
-<!--- mdtoc: toc begin -->
+<!-- toc -->
 
-1. [Synopsis](#synopsis)
-2. [Usage](#usage)
-3. [Help](#help)<!--- mdtoc: toc end -->
+- [Synopsis](#synopsis)
+- [Usage](#usage)
+- [Help](#help)
+
+<!-- /toc -->
 
 ## Synopsis
 
